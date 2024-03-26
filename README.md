@@ -148,3 +148,4 @@ Usage: <class_name>.update(<_id>, <dictionary>)
 <h2 align="center">Authors</h2>
 
 - [Sakina Mammadzade](https://github.com/Sakhinamammadzade)
+- [Kamal Huseynli](https://github.com/Kamalusta)
