@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[new[0]]()
-        if c_params is not "":
+        if c_params != "":
             c_param = c_params.split(" ")
             for p in c_param:
                 pa = p.split("=")
