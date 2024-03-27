@@ -117,8 +117,7 @@ class HBNBCommand(cmd.Cmd):
         """ Create an object of any class"""
         new = args.partition(" ")
         c_name = new[0]
-        c_params = new[2]
-        c_param = c_params.split(" ")
+        c_params = new[2]        
 
         if not args:
             print("** class name missing **")
@@ -127,19 +126,20 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[new[0]]()
-        for p in c_param:
-            pa = p.split("=")
-            key = pa[0]
-            value = pa[1].strip("\"'").replace("_", " ")
-            try:
-                int(value)
-            except Exception:
+        if c_params is not "":
+            c_param = c_params.split(" ")
+            for p in c_param:
+                pa = p.split("=")
+                key = pa[0]
+                value = pa[1].strip("\"'").replace("_", " ")
                 try:
-                    float(value)
+                    int(value)
                 except Exception:
-                    pass
-
-            setattr(new_instance, key, value)
+                    try:
+                        float(value)
+                    except Exception:
+                        pass
+                setattr(new_instance, key, value)
         storage.save()
         print(new_instance.id)
         storage.save()
