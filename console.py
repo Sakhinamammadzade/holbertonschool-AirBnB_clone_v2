@@ -130,7 +130,15 @@ class HBNBCommand(cmd.Cmd):
         for p in c_param:
             pa = p.split("=")
             key = pa[0]
-            value = pa[1].strip('"').replace("_", " ")
+            value = pa[1].strip("\"'").replace("_", " ")
+            try:
+                int(value)
+            except Exception:
+                try:
+                    float(value)
+                except Exception:
+                    pass
+
             setattr(new_instance, key, value)
         storage.save()
         print(new_instance.id)
