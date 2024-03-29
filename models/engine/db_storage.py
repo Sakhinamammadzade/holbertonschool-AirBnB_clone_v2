@@ -43,11 +43,11 @@ class DBStorage:
             if isinstance(cls, str):
                 cls = classes[cls]
             for ins in self.__session.query(cls).all():
-                objects["{}".format(ins.id)] = ins
+                objects["{}.{}".format(ins.__class__.__name__, ins.id)] = ins           
         else:
             for classs in classes:
                 for ins in self.__session.query(classes[classs]).all():                
-                    objects[f"{obj.__class__.__name__}.{ins.id}"] = ins
+                    objects[f"{ins.__class__.__name__}.{ins.id}"] = ins
         return objects
 
 
@@ -66,11 +66,11 @@ class DBStorage:
 
     def reload(self):
         from models.base_model import BaseModel, Base
-        # from models.user import User
-        # from models.place import Place
+        from models.user import User
+        from models.place import Place
         from models.state import State
         from models.city import City
-        # from models.amenity import Amenity
+        from models.amenity import Amenity
         # from models.review import Review
 
         Base.metadata.create_all(self.__engine)
