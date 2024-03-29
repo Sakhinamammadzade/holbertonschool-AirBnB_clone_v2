@@ -13,6 +13,7 @@ host = os.environ.get('HBNB_MYSQL_HOST')
 db = os.environ.get('HBNB_MYSQL_DB')
 
 class DBStorage:
+    """doc"""
     __engine = None
     __session = None
 
@@ -42,7 +43,7 @@ class DBStorage:
             if isinstance(cls, str):
                 cls = classes[cls]
             for ins in self.__session.query(cls).all():
-                objects["{}.{}".format(ins.__class__.__name__, ins.id)] = ins
+                objects["{}".format(ins.id)] = ins
         else:
             for classs in classes:
                 for ins in self.__session.query(classes[classs]).all():                
@@ -51,23 +52,26 @@ class DBStorage:
 
 
     def new(self, obj):
+        """doc"""
         self.__session.add(obj)
 
     def save(self):
+        """doc"""
         self.__session.commit()
 
     def delete(self, obj=None):
+        """doc"""
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
         from models.base_model import BaseModel, Base
-        from models.user import User
-        from models.place import Place
+        # from models.user import User
+        # from models.place import Place
         from models.state import State
         from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
+        # from models.amenity import Amenity
+        # from models.review import Review
 
         Base.metadata.create_all(self.__engine)
         session_scop = sessionmaker(bind=self.__engine, expire_on_commit=False)
