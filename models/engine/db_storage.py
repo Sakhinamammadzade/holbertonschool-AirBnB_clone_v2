@@ -67,11 +67,11 @@ class DBStorage:
     def reload(self):
         from models.base_model import BaseModel, Base
         from models.user import User
-        from models.place import Place
+        from models.place2 import Place
         from models.state import State
         from models.city import City
         from models.amenity import Amenity
-        # from models.review import Review
+        from models.review import Review
 
         Base.metadata.create_all(self.__engine)
         session_scop = sessionmaker(bind=self.__engine, expire_on_commit=False)
