@@ -44,5 +44,20 @@ class Place(BaseModel, Base):
                     review_list.append(review)
 
             return review_list
-        
-   
+
+        @property
+        def amenities(self):
+            """getter for filestorage"""
+            from models import storage
+            result = []
+            all_amenities = storage.all(Amenity).values()
+            for amenity in all_amenities:
+                if amenity.id in self.amenity_id:
+                    result.append(amenity)
+            return result
+
+        @amenities.setter
+        def amenities(self, obj):
+            """setter for amenities"""
+            if type(obj) is Amenity:
+                self.amenity_ids.append(obj.id)
