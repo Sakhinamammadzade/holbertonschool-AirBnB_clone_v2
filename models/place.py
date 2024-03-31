@@ -36,6 +36,7 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """ Getter instance method """
+            from models import storage
             all_reviews = storage.all(Review)
             review_list = []
 
