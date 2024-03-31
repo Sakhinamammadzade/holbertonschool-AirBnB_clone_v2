@@ -9,6 +9,7 @@ import sqlalchemy
 
 Base = declarative_base()
 
+
 class BaseModel():
     """A base class for all hbnb models"""
 
@@ -64,5 +65,3 @@ class BaseModel():
         """doc"""
         from models import storage
         storage.delete(self)
-
-

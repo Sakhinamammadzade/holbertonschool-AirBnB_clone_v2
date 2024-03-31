@@ -12,14 +12,17 @@ pwd = os.environ.get('HBNB_MYSQL_PWD')
 host = os.environ.get('HBNB_MYSQL_HOST')
 db = os.environ.get('HBNB_MYSQL_DB')
 
+
 class DBStorage:
     """doc"""
     __engine = None
     __session = None
 
     def __init__(self):
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(usr, pwd, host, db),  pool_pre_ping=True)
-       
+        self.__engine = create_engine(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(usr, pwd, host, db),
+            pool_pre_ping=True)
+
         if env == "test":
             metadata = MetaData()
             metadata.bind = self.__engine
@@ -37,19 +40,18 @@ class DBStorage:
 
         objects = {}
         classes = {"City": City, "State": State,
-                     "User": User, "Place": Place,
-                     "Review": Review, "Amenity": Amenity}
+                   "User": User, "Place": Place,
+                   "Review": Review, "Amenity": Amenity}
         if cls:
             if isinstance(cls, str):
                 cls = classes[cls]
             for ins in self.__session.query(cls).all():
-                objects["{}.{}".format(ins.__class__.__name__, ins.id)] = ins           
+                objects["{}.{}".format(ins.__class__.__name__, ins.id)] = ins
         else:
             for classs in classes:
-                for ins in self.__session.query(classes[classs]).all():                
+                for ins in self.__session.query(classes[classs]).all():
                     objects[f"{ins.__class__.__name__}.{ins.id}"] = ins
         return objects
-
 
     def new(self, obj):
         """doc"""
