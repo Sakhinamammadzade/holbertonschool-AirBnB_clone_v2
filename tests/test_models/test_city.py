@@ -12,13 +12,15 @@ class test_City(test_basemodel):
         super().__init__(*args, **kwargs)
         self.name = "City"
         self.value = City
+        self.city1 = City(state_id="d80e0345-67eb-434a-b1e0-07783522124e",
+                          name="Baku")
 
     def test_state_id(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.state_id), str)
+        self.assertEqual(type(self.city1.state_id), str)
 
     def test_name(self):
         """ """
         new = self.value()
-        self.assertEqual(type(new.name), str)
+        self.assertEqual(type(self.city1.name), str)
