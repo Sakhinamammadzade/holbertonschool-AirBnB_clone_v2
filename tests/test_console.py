@@ -16,6 +16,7 @@ from models.engine.db_storage import DBStorage
 from models import type_of_storage
 from os import getenv
 
+
 class TestConsole(unittest.TestCase):
     """this will test the console"""
 
