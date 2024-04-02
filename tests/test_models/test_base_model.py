@@ -52,7 +52,7 @@ class test_basemodel(unittest.TestCase):
         copy.update({1: 2})
         with self.assertRaises(TypeError):
             new = BaseModel(**copy)
-    
+
     @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "DBStorage")
     def test_save(self):
         """ Testing save """
@@ -102,5 +102,5 @@ class test_basemodel(unittest.TestCase):
         new = self.value()
         self.assertEqual(type(new.updated_at), datetime.datetime)
         n = new.to_dict()
-        new = BaseModel(**n)
+        new = self.value(**n)
         self.assertTrue(n['created_at'] != new.updated_at)
