@@ -13,7 +13,6 @@ from models.place import Place
 from models.review import Review
 from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
-from models import type_of_storage
 from os import getenv
 
 
@@ -60,8 +59,9 @@ class TestConsole(unittest.TestCase):
             HBNBCommand().do_create("BaseModel")
             self.assertTrue(temp_out.getvalue() != "")
 
-            temp_out.close()
-            sys.stdout = sys.__stdout__
+        temp_out.close()
+        sys.stdout = sys.__stdout__
 
-    if __name__ == "__main__":
-        unittest.main()
+
+if __name__ == "__main__":
+    unittest.main()
