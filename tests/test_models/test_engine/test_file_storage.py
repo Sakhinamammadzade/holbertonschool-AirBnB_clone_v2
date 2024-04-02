@@ -6,7 +6,7 @@ from models import storage
 from os import getenv, remove, path
 
 
-@unittest.skipIf(type_of_storage == "db", "Storage type: Database")
+@unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db", "DBStorage")
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
 
