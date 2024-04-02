@@ -12,10 +12,11 @@ class test_User(test_basemodel):
         super().__init__(*args, **kwargs)
         self.name = "User"
         self.value = User
-        self.user1 = User(first_name='Sakina',
-                          last_name='Mammadzade',
-                          email='sakina.mammadzade@gmail.com',
-                          password='salam123')
+        self.user1 = User(
+            first_name='Joe',
+            last_name='DeGuzman',
+            email='heeqaqahelemiolub@gmail.com',
+            password='salam123')
 
     def test_first_name(self):
         """ """
