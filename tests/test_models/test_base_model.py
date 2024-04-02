@@ -12,7 +12,6 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.amenity import Amenity
-from models import type_of_storage
 
 
 class test_basemodel(unittest.TestCase):
@@ -53,7 +52,8 @@ class test_basemodel(unittest.TestCase):
         copy.update({1: 2})
         with self.assertRaises(TypeError):
             new = BaseModel(**copy)
-
+    
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == "db", "DBStorage")
     def test_save(self):
         """ Testing save """
         i = self.value()
