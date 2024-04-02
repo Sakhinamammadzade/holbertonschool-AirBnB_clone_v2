@@ -14,7 +14,7 @@ from models.review import Review
 from models.engine.file_storage import FileStorage
 from models.engine.db_storage import DBStorage
 from models import type_of_storage
-
+from os import getenv
 
 class TestConsole(unittest.TestCase):
     """this will test the console"""
@@ -55,7 +55,7 @@ class TestConsole(unittest.TestCase):
 
         temp_out = StringIO()
         sys.stdout = temp_out
-        if type_of_storage != "db":
+        if getenv("HBNB_TYPE_STORAGE") != "db":
             HBNBCommand().do_create("BaseModel")
             self.assertTrue(temp_out.getvalue() != "")
 

@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import (create_engine)
 
 
-@unittest.skipIf(type_of_storage != "db", "Storage type: Database")
+@unittest.skipIf(getenv("HBNB_TYPE_STORAGE") != "db", "DBStorage")
 class TestDBStorage(unittest.TestCase):
     """ Class to test the database storage method """
 
