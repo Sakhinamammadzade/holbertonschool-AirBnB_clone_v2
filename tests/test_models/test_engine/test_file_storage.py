@@ -2,8 +2,8 @@
 """ Module for testing file storage"""
 import unittest
 from models.base_model import BaseModel
-from models import storage, type_of_storage
-import os
+from models import storage
+from os import getenv, remove, path
 
 
 @unittest.skipIf(type_of_storage == "db", "Storage type: Database")
