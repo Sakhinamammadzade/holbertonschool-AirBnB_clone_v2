@@ -7,21 +7,7 @@ from models.engine.file_storage import FileStorage
 from os import getenv
 from models.review import Review
 from models.amenity import Amenity
-from models import storage
-import os
-from sqlalchemy import *
 
-
-metadata = Base.metadata
-place_amenity = Table('place_amenity', metadata,
-                      Column('place_id',
-                             String(60),
-                             ForeignKey('places.id'),
-                             primary_key=True, nullable=False),
-                      Column('amenity_id',
-                             String(60),
-                             ForeignKey('amenities.id'),
-                             primary_key=True, nullable=False))
 
 class Place(BaseModel, Base):
     """ A place to stay """
