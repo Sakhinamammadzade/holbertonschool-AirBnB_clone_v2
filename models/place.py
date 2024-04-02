@@ -1,29 +1,17 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Float, Integer, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
+from models.engine.file_storage import FileStorage
+from os import getenv
 from models.review import Review
-from models import storage
-import os
-from sqlalchemy import *
-
-
-metadata = Base.metadata
-place_amenity = Table('place_amenity', metadata,
-                      Column('place_id',
-                             String(60),
-                             ForeignKey('places.id'),
-                             primary_key=True, nullable=False),
-                      Column('amenity_id',
-                             String(60),
-                             ForeignKey('amenities.id'),
-                             primary_key=True, nullable=False))
+from models.amenity import Amenity
 
 
 class Place(BaseModel, Base):
     """ A place to stay """
-    __tablename__ = "places"
+    __tablename__ = 'places'
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
     name = Column(String(128), nullable=False)
@@ -35,38 +23,36 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
+    # user = relationship("User", back_populates="places")
     reviews = relationship("Review", backref="place", cascade="all, delete")
-    amenities = relationship('Amenity',
-                             secondary='place_amenity',
-                             viewonly=False)
+    place_amenity = Table('place_amenity', Base.metadata,
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'),
+                                 primary_key=True, nullable=False),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'),
+                                 primary_key=True, nullable=False)
+                          )
+    amenities = relationship(
+        "Amenity", secondary=place_amenity, viewonly=False)
 
-    if os.getenv("HBNB_TYPE_STORAGE") != "db":
+    if getenv("HBNB_TYPE_STORAGE", None) != "db":
         @property
         def reviews(self):
-            """ Getter instance method """
-            from models import storage
-            all_reviews = storage.all(Review)
-            review_list = []
-
-            for review in all_reviews.values():
-                if review.place_id == self.id:
-                    review_list.append(review)
-
-            return review_list
+            """Getter function for reviews"""
+            storage = FileStorage()
+            return [review for review in storage.all(Review).values()
+                    if review.place_id == self.id]
 
         @property
         def amenities(self):
-            """getter for filestorage"""
-            from models import storage
-            result = []
-            all_amenities = storage.all(Amenity).values()
-            for amenity in all_amenities:
-                if amenity.id in self.amenity_id:
-                    result.append(amenity)
-            return result
+            """Getter function for amenities"""
+            storage = FileStorage()
+            return [storage.get(Amenity, amenity_id)
+                    for amenity_id in self.amenity_ids]
 
         @amenities.setter
-        def amenities(self, obj):
-            """setter for amenities"""
-            if type(obj) is Amenity:
-                self.amenity_ids.append(obj.id)
+        def amenities(self, amenity):
+            """Setter function for amenities"""
+            if isinstance(amenity, Amenity):
+                self.amenity_ids.append(amenity.id)
