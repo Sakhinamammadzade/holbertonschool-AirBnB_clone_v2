@@ -1,31 +1,27 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Integer, String, ForeignKey
+from models.base_model import BaseModel
+from models.base_model import Base
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from models import storage
 from models.city import City
-import os
+from models.engine.file_storage import FileStorage
 
 
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
+
     name = Column(String(128), nullable=False)
-    cities = relationship("City",
-                          backref="state",
-                          cascade="all, delete",
-                          passive_deletes=True)
+    cities = relationship("City", backref="state", cascade="all, delete")
 
-    if os.getenv("HBNB_TYPE_STORAGE") != "db":
-        @property
-        def cities(self):
-            """ Getter instance method """
-            all_cities = storage.all(City)
-            city_list = []
+    def __init__(self, *args, **kwargs):
+        """initializes state"""
+        super().__init__(*args, **kwargs)
 
-            for city in all_cities.values():
-                if city.state_id == self.id:
-                    city_list.append(city)
-
-            return city_list
+    @property
+    def cities(self):
+        """Getter function for cities"""
+        storage = FileStorage()
+        return [city for city in storage.all(City).values()
+                if city.state_id == self.id]
