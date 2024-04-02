@@ -4,7 +4,7 @@ from tests.test_models.test_base_model import test_basemodel
 from models.place import Place
 
 
-class test_Place(test_basemodel):
+class test_place(test_basemodel):
     """ """
 
     def __init__(self, *args, **kwargs):
@@ -14,8 +14,8 @@ class test_Place(test_basemodel):
         self.value = Place
         self.place1 = Place(city_id="d80e0344-63eb-434a-b1e0-07783522124e",
                             user_id="d81e0344-63eb-434a-b1e0-07783522124e",
-                            name="Sakina",
-                            description="WOOWW Amazing zad:",
+                            name="Los Pollos Hermanos",
+                            description="Amazing place :)",
                             number_rooms=3,
                             number_bathrooms=4,
                             max_guest=15,
