@@ -14,7 +14,7 @@ class test_review(test_basemodel):
         self.value = Review
         self.review1 = Review(place_id="d80e0344-63eb-434a-b1e0-07783522124e",
                               user_id="d81e0344-63eb-434a-b1e0-0778352212ge",
-                              text="Not bad(")
+                              text="Nice place!!!")
 
     def test_place_id(self):
         """ """
