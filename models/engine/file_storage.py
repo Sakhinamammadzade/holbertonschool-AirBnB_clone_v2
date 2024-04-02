@@ -10,13 +10,22 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        if cls:
-            result = {}
+        if cls is not None:
+            class_dict = {}
             for key, value in FileStorage.__objects.items():
-                if key.startswith(cls.__name__):
-                    result[key] = value
-            return result
-        return FileStorage.__objects
+                if type(value) is cls:
+                    class_dict[key] = value
+            return class_dict
+        else:
+            return FileStorage.__objects
+
+    def delete(self, obj=None):
+        """ Public instance method that deletes given object"""
+        try:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            del FileStorage.__objects[key]
+        except Exception:
+            pass
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -42,10 +51,10 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-            'BaseModel': BaseModel, 'User': User, 'Place': Place,
-            'State': State, 'City': City, 'Amenity': Amenity,
-            'Review': Review
-        }
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                  }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -54,10 +63,3 @@ class FileStorage:
                     self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
-
-    def delete(self, obj=None):
-        """Deletes obj from objects"""
-        if obj:
-            obj_key = f"{obj.__class__.__name__}.{obj.id}"
-            if obj_key in FileStorage.__objects:
-                del FileStorage.__objects[obj_key]
