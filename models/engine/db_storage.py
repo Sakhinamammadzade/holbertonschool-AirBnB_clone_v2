@@ -37,13 +37,15 @@ class DBStorage:
             for clsN in classes:
                 data = self.__session.query(classes[clsN]).all()
                 for obj in data:
-                    new_dict["{}.{}".format(obj.__class__.__name__, obj.id)] = obj
+                    new_dict["{}.{}".
+                             format(obj.__class__.__name__, obj.id)] = obj
         else:
             if isinstance(cls, str):
                 cls = classes[cls]
             data = self.__session.query(cls).all()
             for obj in data:
-                    new_dict["{}.{}".format(obj.__class__.__name__, obj.id)] = obj           
+                new_dict["{}.{}".
+                         format(obj.__class__.__name__, obj.id)] = obj
         return (new_dict)
 
     def new(self, obj):
