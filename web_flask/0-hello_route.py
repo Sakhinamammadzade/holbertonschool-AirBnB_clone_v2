@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """starts Flask Applications"""
 from flask import Flask, request
-
+from markupsafe import escape
 
 app = Flask(__name__)
 
