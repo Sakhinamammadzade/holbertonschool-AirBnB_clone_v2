@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 """starts Flask Applications"""
 from flask import Flask, request
 
