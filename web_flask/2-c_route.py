@@ -1,4 +1,4 @@
-#!/usr/bin/bash/python3
+#!/usr/bin/python3
 """C is funn! and best"""
 
 from flask import Flask
