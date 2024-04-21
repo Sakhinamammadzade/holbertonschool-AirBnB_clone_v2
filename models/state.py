@@ -8,6 +8,7 @@ from models.city import City
 from models.engine.file_storage import FileStorage
 from os import getenv
 
+
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
