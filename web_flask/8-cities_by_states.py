@@ -21,7 +21,7 @@ def display_html():
     states = storage.all(State)
     return render_template('8-cities_by_states.html',
                            Table="States",
-                           states=states)
+                           state=states)
 
 
 if __name__ == "__main__":
