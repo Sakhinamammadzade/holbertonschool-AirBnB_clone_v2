@@ -22,7 +22,7 @@ class State(BaseModel, Base):
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
         def cities(self):
-        """Getter function for cities"""
-        storage = FileStorage()
-        return [city for city in storage.all(City).values()
-                if city.state_id == self.id]
+            """Getter function for cities"""
+            storage = FileStorage()
+            return [city for city in storage.all(City).values()
+                    if city.state_id == self.id]
