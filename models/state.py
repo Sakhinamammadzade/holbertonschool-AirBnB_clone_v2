@@ -19,9 +19,9 @@ class State(BaseModel, Base):
         """initializes state"""
         super().__init__(*args, **kwargs)
 
-if getenv('HBNB_TYPE_STORAGE') != 'db':
-    @property
-    def cities(self):
+    if getenv('HBNB_TYPE_STORAGE') != 'db':
+        @property
+        def cities(self):
         """Getter function for cities"""
         storage = FileStorage()
         return [city for city in storage.all(City).values()
